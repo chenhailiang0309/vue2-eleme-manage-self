@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 import { baseUrl, baseImgPath } from '@/config/env.js'
 
 Vue.use(Vuex)
@@ -18,13 +19,19 @@ const mutations = {
 
 const actions = {
   getAdminData({ commit }) {
-            console.log(this)
-    this.$http({
+    axios({
         url: baseUrl + '/admin/info',
         method: 'GET',
       })
       .then(res => {
-        console.log(res)
+        var data = res.data;
+        // console.log(data)
+        if(data.status==1){
+          commit('saveAdminInfo',data.data)
+        }else{
+          // console.log(data.message)
+        }
+
       })
       .catch(error => {
         console.log(error)

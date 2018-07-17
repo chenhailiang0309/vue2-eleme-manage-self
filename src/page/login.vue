@@ -28,10 +28,12 @@ import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
+      // 表单数据
       loginForm: {
         username: '',
         password: '',
       },
+      // 表单校验
       rules: {
         username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
@@ -41,8 +43,10 @@ export default {
   },
   computed: {
     ...mapState(['adminInfo']),
+
   },
   mounted() {
+    // console.log(this.adminInfo)
     this.showLogin = true;
     if (!this.adminInfo.id) {
       this.getAdminData()
@@ -55,23 +59,54 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) { // 校验成功
           this.$http({
-            url:baseUrl+'/admin/login',
-            method:'POST',
-            data:{
-              user_name:this.loginForm.username,
-              password:this.loginForm.password
-            }
-          })
-          .then(res=>{
-            console.log(res)
-          })
-          .catch(error=>{
-            console.log(error)
-          })
+              url: baseUrl + '/admin/login',
+              method: 'POST',
+              data: {
+                user_name: this.loginForm.username,
+                password: this.loginForm.password
+              }
+            })
+            .then(res => {
+              var data = res.data;
+              // console.log(data)
+              if (data.status == 1) {
+                this.getAdminData()
+                this.$message({
+                  type: 'success',
+                  message: '登陆成功'
+                })
+                this.$router.push('manage')
+              } else {
+                this.$message({
+                  type: 'error',
+                  message: data.message
+                })
+              }
+            })
+            .catch(error => {
+              // console.log(error)
+            })
         } else { // 校验失败
-
+          this.$notify.error({
+            title: '错误',
+            message: '请输入正确的用户名密码',
+            offset: 100
+          });
+          return false;
         }
       })
+    }
+  },
+  watch: {
+    adminInfo:function(newValue) {
+      console.log('aaaa')
+      if (newValue.id) {
+        this.$message({
+          type: 'success',
+          message: '检测到您之前登录过，将自动登录'
+        });
+        this.$router.push('manage')
+      }
     }
   }
 }
