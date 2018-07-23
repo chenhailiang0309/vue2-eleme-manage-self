@@ -2,7 +2,7 @@
   <div class="manage_page fillcontain">
     <el-row style="height: 100%;">
       <el-col :span="4" style="min-height: 100%;background-color: #324057">
-        <el-menu style="min-height: 100%;" background-color="#324057" text-color="#fff" theme="dark" router>
+        <el-menu style="min-height: 100%;" background-color="#324057" text-color="#fff" router>
           <el-menu-item index="manage"><i class="el-icon-menu"></i>首页</el-menu-item>
           <el-submenu index="2">
             <template slot="title"><i class="el-icon-document"></i>数据管理</template>

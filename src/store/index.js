@@ -25,10 +25,9 @@ const actions = {
       })
       .then(res => {
         var data = res.data;
-        // console.log(data)
-        if(data.status==1){
-          commit('saveAdminInfo',data.data)
-        }else{
+        if (data.status == 1) {
+          commit('saveAdminInfo', data.data)
+        } else {
           // console.log(data.message)
         }
 
