@@ -87,7 +87,7 @@
 <script>
 import headTop from '@/components/headTop'
 import { baseUrl, baseImgPath } from '@/config/env'
-import { cityGuess, getResturants, getResturantsCount, foodCategory, searchplace, updateResturant } from '@/api/getData'
+import { cityGuess, getResturants, getResturantsCount, foodCategory, searchplace, updateResturant, deleteResturant } from '@/api/getData'
 
 export default {
   data() {
@@ -192,6 +192,33 @@ export default {
         this.getCategory();
       }
     },
+    // 添加食品
+    addFood(index, row) {
+      this.$router.push({
+        path: 'addGoods',
+        query: {
+          restaurant_id: row.id
+        }
+      })
+    },
+    // 删除店铺
+    async handleDelete(index, row) {
+      try {
+        const res = await deleteResturant(row.id);
+        if (res.data.status == 1) {
+          this.$message({
+            type: 'success',
+            message: '删除店铺成功'
+          })
+          this.tableData.splice(index, 1)
+        } else {
+          throw new Error(res.data.message)
+        }
+      } catch (e) {
+        // statements
+        console.log(e);
+      }
+    },
     async querySearchAsync(queryString, cb) {
       if (queryString) {
         try {
@@ -205,7 +232,10 @@ export default {
             cb(cityList)
           }
         } catch (e) {
-          console.log(e);
+          this.$message({
+            type: 'error',
+            message: e.message
+          })
         }
       }
     },

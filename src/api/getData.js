@@ -61,8 +61,75 @@ export const getResturantsCount = () => {
 export const foodCategory = () => {
   return axios.get(baseUrl + '/shopping/v2/restaurant/category')
 }
-
+// 删除店铺
+export const deleteResturant = restaurant_id => {
+  return axios.delete(baseUrl + '/shopping/restaurant/' + restaurant_id)
+}
 // 更新餐馆信息
 export const updateResturant = data => {
   return axios.post(baseUrl + '/shopping/updateshop', data)
+}
+// 获取餐馆详细信息
+export const getResturantDetail = restaurant_id => {
+  return axios.get(baseUrl + '/shopping/restaurant/' + restaurant_id)
+}
+// 获取食品列表
+export const getFoods = data => {
+  return axios.get(baseUrl + '/shopping/v2/foods', data)
+}
+// 获取食品数量
+export const getFoodsCount = data => {
+  return axios.get(baseUrl + '/shopping/v2/foods/count', data)
+}
+// 获取menu列表
+export const getMenu = (restaurant_id, allMenu) => {
+  return axios.get(baseUrl + '/shopping/v2/menu?restaurant_id=' + restaurant_id + '&allMenu=' + allMenu)
+}
+// 获取menu详情
+export const getMenuById = category_id => {
+  return axios.get(baseUrl + '/shopping/v2/menu/' + category_id)
+}
+// 更新食品信息
+export const updateFood = data => {
+  return axios.post(baseUrl + '/shopping/v2/updatefood', data)
+}
+// 删除食品
+export const deleteFood = food_id => {
+  return axios.delete(baseUrl + '/shopping/v2/food/' + food_id)
+}
+// 获取订单列表
+export const getOrderList = data => {
+  return axios.get(baseUrl + '/bos/orders', data)
+}
+// 获取订单数量
+export const getOrderCount = data => {
+  return axios.get(baseUrl + '/bos/orders/count', data)
+}
+// 获取用户信息
+export const getUserInfo = user_id => {
+  return axios.get(baseUrl + '/v1/user/' + user_id)
+}
+// 获取地址信息
+export const getAddressById = address_id => {
+  return axios.get(baseUrl + '/v1/addresse/' + address_id)
+}
+// 添加商铺
+export const addShop = data => {
+  return axios.post(baseUrl + '/shopping/addShop', data, )
+}
+// 获取当前店铺食品种类
+export const getCategory = restaurant_id => {
+  return axios.get(baseUrl + '/shopping/getcategory/' + restaurant_id)
+}
+// 添加食品种类
+export const addCategory = data => {
+  return axios.post(baseUrl + '/shopping/addcategory', data)
+}
+// 添加食品
+export const addFood = data => {
+  return axios.post(baseUrl + '/shopping/addfood', data)
+}
+// 获取用户分布信息
+export const getUserCity = () => {
+  return axios.get(baseUrl + '/v1/user/city/count')
 }
